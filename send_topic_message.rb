@@ -8,7 +8,6 @@ connection.start
 
 # open a channel
 channel = connection.create_channel
-channel.confirm_select
 
 # create exchange
 exchange = channel.topic('rlto_topic_exchange')
@@ -19,11 +18,7 @@ msg         = ARGV.empty? ? 'Hello RLTO!' : ARGV.join(' ')
 
 # publish message
 exchange.publish(msg, routing_key: routing_key)
-if exchange.wait_for_confirms
-  puts " [x] Sent #{routing_key}:#{msg}"
-else
-  puts " [x] Failed #{routing_key}:#{msg}"
-end
+puts " [x] Sent #{routing_key}:#{msg}"
 
 # cleanup
 channel.close
